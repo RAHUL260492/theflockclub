@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<!-- ============================================================================
+     THE FLOCK CLUB — single-file landing page
+     ----------------------------------------------------------------------------
+     HOW TO EDIT THIS SITE (no coding needed):
+
+     1. COLORS & FONTS .... See ":root" in the <style> block below. Change the
+                            hex values once and they update everywhere.
+     2. TEXT ............... Search the page for the section you want (each one is
+                            marked with a big "===== SECTION =====" comment) and
+                            edit the words between the tags.
+     3. EVENTS ............ Find "===== UPCOMING EVENTS =====". Each event is one
+                            <article class="event-card"> — copy/paste to add more,
+                            and change the date, title, location, and link.
+     4. LINKS ............. Instagram handle + email are in the FOOTER section and
+                            in the email form. Search for "EDIT:" to find them fast.
+     5. EMAIL SIGNUP ...... The form currently just shows a thank-you message.
+                            To collect real emails, see the comment marked
+                            "EDIT: CONNECT YOUR EMAIL FORM" near the bottom.
+
+     Hosting: this is one self-contained file. Push it to GitHub and turn on
+     GitHub Pages (Settings → Pages → deploy from branch) — no build step needed.
+============================================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#FAF5EC" />
+  <title>The Flock Club — Find your flock</title>
+  <meta name="description" content="The Flock Club is a wellness and connection community in Gurugram. Runs, walks, soulful music and breathwork — real people, in person. Find your flock." />
+
+  <!-- Social preview (optional — edit URL/handles later) -->
+  <meta property="og:title" content="The Flock Club — Find your flock" />
+  <meta property="og:description" content="A wellness & connection community in Gurugram. Come as you are. Your people are out here." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts: preconnect for speed, swap to avoid invisible text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ============================================================
+     1. DESIGN TOKENS  —  edit colors, fonts & spacing here
+     ============================================================ */
+  :root{
+    /* Warm, earthy-but-modern palette */
+    --cream:      #FAF5EC;   /* page background */
+    --paper:      #FFFCF6;   /* cards / surfaces */
+    --ink:        #2B2722;   /* primary text (charcoal) */
+    --ink-soft:   #574F45;   /* secondary text — passes AA on cream */
+    --terracotta: #BB4D2A;   /* primary accent / CTA */
+    --terracotta-dark:#9E3F20;/* CTA hover/press */
+    --forest:     #1E4A3D;   /* deep contrast (Flagship card, footer) */
+    --forest-soft:#2C6553;   /* lighter forest for accents */
+    --gold:       #D69A4A;   /* warm decorative accent (not used for small text) */
+    --border:     rgba(43,39,34,.12);
+    --border-strong: rgba(43,39,34,.20);
+    --on-dark:    #FBF4E9;   /* text on forest/terracotta surfaces */
+    --on-dark-soft:#D8E2DC;  /* secondary text on forest */
+
+    /* Type */
+    --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    /* Fluid type scale (mobile-first; scales up with viewport) */
+    --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.92rem);
+    --step-0:  clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+    --step-1:  clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+    --step-2:  clamp(1.55rem, 1.35rem + 1vw, 2.25rem);
+    --step-3:  clamp(2rem, 1.6rem + 2vw, 3.25rem);
+    --step-4:  clamp(2.7rem, 2rem + 3.6vw, 5rem);
+
+    /* Spacing rhythm (8pt-based) */
+    --space-2: .5rem;  --space-3:.75rem; --space-4:1rem; --space-6:1.5rem;
+    --space-8: 2rem;   --space-12:3rem;  --space-16:4rem; --space-20:5rem;
+    --section-y: clamp(4rem, 3rem + 6vw, 7.5rem);
+
+    --radius: 18px;
+    --radius-lg: 26px;
+    --radius-pill: 999px;
+    --shadow-sm: 0 1px 2px rgba(43,39,34,.06), 0 2px 8px rgba(43,39,34,.05);
+    --shadow-md: 0 6px 16px rgba(43,39,34,.08), 0 14px 40px rgba(43,39,34,.08);
+    --shadow-lg: 0 18px 50px rgba(43,39,34,.14);
+    --maxw: 1180px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  /* ============================================================
+     2. RESET & BASE
+     ============================================================ */
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  html.allow-smooth{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    font-size:var(--step-0);
+    line-height:1.65;
+    color:var(--ink);
+    background:var(--cream);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;            /* belt-and-braces: no sideways scroll */
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; }
+  h1,h2,h3{ font-family:var(--font-display); font-weight:600; line-height:1.08;
+            letter-spacing:-.01em; text-wrap:balance; margin:0; }
+  p{ margin:0; text-wrap:pretty; }
+  ::selection{ background:var(--terracotta); color:#fff; }
+
+  /* Visible, on-brand focus for keyboard users only */
+  :focus-visible{ outline:3px solid var(--forest); outline-offset:3px; border-radius:6px; }
+
+  /* Layout helpers */
+  .container{ width:100%; max-width:var(--maxw); margin-inline:auto;
+              padding-inline:clamp(1.15rem, 5vw, 2.5rem); }
+  .section{ padding-block:var(--section-y);
+            scroll-margin-top:84px; /* clears sticky header on anchor jumps */ }
+  .eyebrow{ font-family:var(--font-body); font-weight:600; font-size:var(--step--1);
+            letter-spacing:.16em; text-transform:uppercase; color:var(--terracotta);
+            margin:0 0 var(--space-4); }
+  .lead{ font-size:var(--step-1); color:var(--ink-soft); max-width:62ch; }
+
+  /* Skip link (keyboard / screen-reader users) */
+  .skip-link{ position:absolute; left:var(--space-4); top:-100px; z-index:1000;
+    background:var(--forest); color:var(--on-dark); padding:.7rem 1.1rem;
+    border-radius:10px; font-weight:600; transition:top .2s var(--ease); }
+  .skip-link:focus{ top:var(--space-4); }
+
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+
+  /* ============================================================
+     3. BUTTONS  (44px+ tap targets, tactile press states)
+     ============================================================ */
+  .btn{
+    --btn-bg:var(--terracotta); --btn-fg:#fff;
+    display:inline-flex; align-items:center; justify-content:center; gap:.55rem;
+    min-height:52px; padding:.85rem 1.5rem;
+    font-family:var(--font-body); font-size:var(--step-0); font-weight:600;
+    line-height:1; text-decoration:none; cursor:pointer;
+    color:var(--btn-fg); background:var(--btn-bg);
+    border:1px solid transparent; border-radius:var(--radius-pill);
+    box-shadow:var(--shadow-sm);
+    touch-action:manipulation;            /* removes 300ms tap delay */
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .18s var(--ease), background-color .18s var(--ease),
+               box-shadow .18s var(--ease);
+  }
+  .btn:hover{ background:var(--terracotta-dark); box-shadow:var(--shadow-md);
+              transform:translateY(-2px); }
+  .btn:active{ transform:translateY(0) scale(.98); box-shadow:var(--shadow-sm); }
+  .btn--ghost{ --btn-bg:transparent; --btn-fg:var(--ink);
+               border-color:var(--border-strong); box-shadow:none; }
+  .btn--ghost:hover{ --btn-bg:rgba(43,39,34,.04); background:rgba(43,39,34,.04);
+               border-color:var(--ink); transform:translateY(-2px); }
+  .btn--on-dark{ --btn-bg:var(--on-dark); --btn-fg:var(--forest); }
+  .btn--on-dark:hover{ background:#fff; }
+  .btn--block{ width:100%; }
+  .btn svg{ flex:none; }
+
+  /* Subtle text link with animated underline */
+  .link-arrow{ display:inline-flex; align-items:center; gap:.4rem; font-weight:600;
+    color:var(--terracotta); text-decoration:none; }
+  .link-arrow svg{ transition:transform .2s var(--ease); }
+  .link-arrow:hover svg{ transform:translateX(4px); }
+
+  /* ============================================================
+     4. HEADER / NAV  (frosted, hides on scroll down)
+     ============================================================ */
+  .site-header{
+    position:fixed; inset:0 0 auto 0; z-index:100;
+    display:flex; align-items:center;
+    padding-block:.7rem;
+    transition:transform .35s var(--ease), background-color .3s var(--ease),
+               box-shadow .3s var(--ease), backdrop-filter .3s var(--ease);
+  }
+  .site-header.is-scrolled{
+    background:color-mix(in srgb, var(--cream) 82%, transparent);
+    backdrop-filter:blur(12px) saturate(120%);
+    -webkit-backdrop-filter:blur(12px) saturate(120%);
+    box-shadow:0 1px 0 var(--border);
+  }
+  .site-header.is-hidden{ transform:translateY(-105%); }
+  .header-inner{ display:flex; align-items:center; justify-content:space-between;
+    gap:var(--space-4); width:100%; max-width:var(--maxw); margin-inline:auto;
+    padding-inline:clamp(1.15rem, 5vw, 2.5rem); }
+  .brand{ display:inline-flex; align-items:center; gap:.6rem; text-decoration:none;
+    font-family:var(--font-display); font-weight:600; font-size:1.18rem;
+    color:var(--ink); letter-spacing:-.01em; }
+  .brand .brand-mark{ width:30px; height:30px; color:var(--terracotta); }
+  .nav-links{ display:none; gap:clamp(1rem,2.5vw,2rem); list-style:none; margin:0; padding:0; }
+  .nav-links a{ text-decoration:none; color:var(--ink-soft); font-weight:500;
+    font-size:var(--step--1); letter-spacing:.01em; padding:.4rem 0; position:relative; }
+  .nav-links a::after{ content:""; position:absolute; left:0; right:0; bottom:-2px;
+    height:2px; background:var(--terracotta); transform:scaleX(0); transform-origin:left;
+    transition:transform .25s var(--ease); }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-links a:hover::after{ transform:scaleX(1); }
+  .header-cta{ min-height:44px; padding:.6rem 1.2rem; font-size:var(--step--1); }
+  @media (min-width:860px){ .nav-links{ display:flex; } }
+
+  /* ============================================================
+     5. HERO
+     ============================================================ */
+  .hero{ position:relative; min-height:100svh; display:flex; align-items:center;
+    padding-block:clamp(7rem,16vh,11rem) var(--section-16, 4rem); overflow:hidden; }
+  .hero-bg{ position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(120% 90% at 78% 6%, rgba(214,154,74,.30), transparent 55%),
+      radial-gradient(120% 100% at 12% 100%, rgba(187,77,42,.16), transparent 55%),
+      linear-gradient(180deg, #FCF8F0 0%, var(--cream) 45%, #F4ECDD 100%); }
+  /* Flock motif lives in the background SVG (decorative) */
+  .hero-birds{ position:absolute; inset:0; z-index:1; color:var(--forest);
+    opacity:.5; pointer-events:none; }
+  .hero-content{ position:relative; z-index:2; max-width:48rem; }
+  .hero h1{ font-size:var(--step-4); margin-bottom:var(--space-6); }
+  .hero h1 .accent{ color:var(--terracotta); font-style:italic; font-weight:500; }
+  .hero-tagline{ display:inline-block; font-family:var(--font-body); font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; font-size:var(--step--1);
+    color:var(--forest-soft); margin-bottom:var(--space-6); }
+  .hero p.lead{ margin-bottom:var(--space-8); }
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:var(--space-3); }
+  .hero-meta{ margin-top:var(--space-8); display:flex; align-items:center; gap:.6rem;
+    color:var(--ink-soft); font-size:var(--step--1); }
+  .hero-meta svg{ width:18px; height:18px; color:var(--terracotta); flex:none; }
+  .scroll-cue{ position:absolute; left:50%; bottom:1.6rem; transform:translateX(-50%);
+    z-index:2; display:flex; flex-direction:column; align-items:center; gap:.4rem;
+    color:var(--ink-soft); font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; }
+  .scroll-cue .dot{ width:5px; height:5px; border-radius:50%; background:var(--terracotta); }
+
+  /* ============================================================
+     6. GENERIC SECTION BITS
+     ============================================================ */
+  .section-head{ max-width:60ch; margin-bottom:var(--space-12); }
+  .section-head h2{ font-size:var(--step-3); margin-bottom:var(--space-4); }
+  .grid{ display:grid; gap:var(--space-6); }
+  @media (min-width:760px){ .grid-2{ grid-template-columns:repeat(2,1fr); }
+                            .grid-3{ grid-template-columns:repeat(3,1fr); } }
+
+  /* ---- What we do: offering cards ---- */
+  .offer-card{ position:relative; display:flex; flex-direction:column;
+    padding:clamp(1.6rem,4vw,2.4rem); border-radius:var(--radius-lg);
+    background:var(--paper); border:1px solid var(--border); box-shadow:var(--shadow-sm);
+    overflow:hidden;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease); }
+  .offer-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lg); }
+  .offer-card--flagship{ background:var(--forest); color:var(--on-dark);
+    border-color:transparent; }
+  .offer-card--flagship .offer-kicker{ color:var(--gold); }
+  .offer-card--flagship p{ color:var(--on-dark-soft); }
+  .offer-icon{ width:54px; height:54px; display:grid; place-items:center;
+    border-radius:16px; background:rgba(187,77,42,.12); color:var(--terracotta);
+    margin-bottom:var(--space-6); }
+  .offer-card--flagship .offer-icon{ background:rgba(214,154,74,.18); color:var(--gold); }
+  .offer-kicker{ font-size:var(--step--1); font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--terracotta); margin-bottom:.5rem; }
+  .offer-card h3{ font-size:var(--step-2); margin-bottom:var(--space-3); }
+  .offer-card p{ color:var(--ink-soft); margin-bottom:var(--space-6); }
+  .offer-card .offer-foot{ margin-top:auto; display:flex; flex-wrap:wrap; gap:.4rem 1rem;
+    align-items:center; font-size:var(--step--1); }
+  .pill{ display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .8rem;
+    border-radius:var(--radius-pill); background:rgba(43,39,34,.05);
+    font-weight:600; font-size:.8rem; letter-spacing:.02em; }
+  .offer-card--flagship .pill{ background:rgba(251,244,233,.14); color:var(--on-dark); }
+
+  /* ---- Events ---- */
+  .event-card{ display:flex; flex-direction:column; gap:var(--space-3);
+    padding:clamp(1.4rem,3.5vw,1.8rem); background:var(--paper);
+    border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow-sm);
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease); }
+  .event-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow-md); }
+  .event-date{ display:inline-flex; flex-direction:column; align-items:center;
+    justify-content:center; width:60px; height:62px; flex:none; border-radius:14px;
+    background:var(--terracotta); color:#fff; line-height:1; }
+  .event-date .d{ font-family:var(--font-display); font-size:1.5rem; font-weight:600;
+    font-variant-numeric:tabular-nums; }
+  .event-date .m{ font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
+    margin-top:.2rem; opacity:.92; }
+  .event-top{ display:flex; gap:var(--space-4); align-items:flex-start; }
+  .event-top h3{ font-size:var(--step-1); }
+  .event-loc{ display:flex; align-items:center; gap:.4rem; color:var(--ink-soft);
+    font-size:var(--step--1); margin-top:.3rem; }
+  .event-loc svg{ width:15px; height:15px; color:var(--terracotta); flex:none; }
+  .event-tag{ align-self:flex-start; font-size:.72rem; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--forest-soft);
+    background:rgba(44,101,83,.1); padding:.3rem .65rem; border-radius:var(--radius-pill); }
+  .event-card .btn{ margin-top:var(--space-2); }
+  .events-note{ margin-top:var(--space-8); color:var(--ink-soft); font-size:var(--step--1); }
+
+  /* ---- Why join ---- */
+  .why{ background:linear-gradient(180deg, transparent, rgba(214,154,74,.07)); }
+  .value-item{ display:flex; gap:var(--space-4); align-items:flex-start; }
+  .value-item .v-icon{ width:48px; height:48px; flex:none; display:grid; place-items:center;
+    border-radius:14px; background:var(--paper); border:1px solid var(--border);
+    color:var(--forest); box-shadow:var(--shadow-sm); }
+  .value-item h3{ font-size:var(--step-1); margin-bottom:.35rem; }
+  .value-item p{ color:var(--ink-soft); font-size:var(--step-0); }
+  /* Testimonial placeholder */
+  .quote{ margin-top:var(--space-16); padding:clamp(1.8rem,5vw,3rem);
+    border-radius:var(--radius-lg); background:var(--forest); color:var(--on-dark);
+    position:relative; overflow:hidden; }
+  .quote .mark{ font-family:var(--font-display); font-size:5rem; line-height:.6;
+    color:var(--gold); opacity:.5; }
+  .quote blockquote{ margin:0; font-family:var(--font-display); font-size:var(--step-2);
+    line-height:1.25; font-style:italic; max-width:24ch; }
+  .quote figcaption{ margin-top:var(--space-6); color:var(--on-dark-soft);
+    font-size:var(--step--1); }
+  .quote figcaption strong{ color:var(--on-dark); font-style:normal; }
+
+  /* ---- Join / email capture ---- */
+  .join{ position:relative; overflow:hidden; }
+  .join-card{ position:relative; padding:clamp(2rem,6vw,4rem);
+    border-radius:var(--radius-lg); background:var(--paper); border:1px solid var(--border);
+    box-shadow:var(--shadow-md); text-align:center; max-width:640px; margin-inline:auto; }
+  .join-card h2{ font-size:var(--step-3); margin-bottom:var(--space-3); }
+  .join-card p{ color:var(--ink-soft); margin-bottom:var(--space-8); }
+  .signup-form{ display:flex; flex-direction:column; gap:var(--space-3);
+    max-width:440px; margin-inline:auto; text-align:left; }
+  .field label{ display:block; font-weight:600; font-size:var(--step--1);
+    margin-bottom:.4rem; }
+  .field input{ width:100%; min-height:52px; padding:.85rem 1.1rem;
+    font-family:var(--font-body); font-size:var(--step-0); color:var(--ink);
+    background:var(--cream); border:1.5px solid var(--border-strong);
+    border-radius:14px; transition:border-color .2s var(--ease), box-shadow .2s var(--ease); }
+  .field input::placeholder{ color:#9a9186; }
+  .field input:focus{ outline:none; border-color:var(--forest);
+    box-shadow:0 0 0 3px rgba(30,74,61,.18); }
+  .form-note{ margin-top:var(--space-2); font-size:.8rem; color:var(--ink-soft);
+    text-align:center; }
+  .form-status{ margin-top:var(--space-4); font-weight:600; min-height:1.4em; }
+  .form-status[data-state="success"]{ color:var(--forest); }
+  .form-status[data-state="error"]{ color:var(--terracotta-dark); }
+  .form-status .ok{ display:inline-flex; align-items:center; gap:.45rem; }
+
+  /* ============================================================
+     7. FOOTER
+     ============================================================ */
+  .site-footer{ background:var(--forest); color:var(--on-dark);
+    padding-block:var(--space-20) var(--space-12); }
+  .footer-grid{ display:flex; flex-direction:column; gap:var(--space-12); }
+  .footer-brand{ display:inline-flex; align-items:center; gap:.6rem;
+    font-family:var(--font-display); font-size:1.4rem; font-weight:600; }
+  .footer-brand .brand-mark{ width:30px; height:30px; color:var(--gold); }
+  .footer-tag{ margin-top:var(--space-3); color:var(--on-dark-soft); max-width:34ch; }
+  .footer-cols{ display:flex; flex-wrap:wrap; gap:var(--space-12) var(--space-20); }
+  .footer-col h3{ font-family:var(--font-body); font-weight:600; font-size:.78rem;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--gold);
+    margin:0 0 var(--space-4); }
+  .footer-col ul{ list-style:none; margin:0; padding:0; display:flex;
+    flex-direction:column; gap:.7rem; }
+  .footer-col a{ display:inline-flex; align-items:center; gap:.5rem; min-height:30px;
+    color:var(--on-dark-soft); text-decoration:none; transition:color .2s var(--ease); }
+  .footer-col a:hover{ color:#fff; }
+  .footer-col a svg{ width:18px; height:18px; flex:none; }
+  .footer-bottom{ margin-top:var(--space-12); padding-top:var(--space-8);
+    border-top:1px solid rgba(251,244,233,.16);
+    display:flex; flex-wrap:wrap; gap:var(--space-4); justify-content:space-between;
+    align-items:center; color:var(--on-dark-soft); font-size:var(--step--1); }
+  .made-in{ display:inline-flex; align-items:center; gap:.45rem; }
+  .made-in svg{ width:15px; height:15px; color:var(--gold); }
+  @media (min-width:760px){
+    .footer-grid{ flex-direction:row; justify-content:space-between; }
+    .footer-head{ max-width:30rem; }
+  }
+
+  /* ============================================================
+     8. MOTION  —  scroll-reveal, hero float (reduced-motion safe)
+     Animations ONLY run when JS is present AND motion is allowed.
+     ============================================================ */
+  @media (prefers-reduced-motion: no-preference){
+    html.js .reveal{ opacity:0; transform:translateY(26px);
+      transition:opacity .7s var(--ease), transform .7s var(--ease); }
+    html.js .reveal.is-visible{ opacity:1; transform:none; }
+    /* Stagger children of a revealed group */
+    html.js .stagger.is-visible > *{ animation:rise .7s var(--ease) both; }
+    html.js .stagger.is-visible > *:nth-child(2){ animation-delay:.08s; }
+    html.js .stagger.is-visible > *:nth-child(3){ animation-delay:.16s; }
+    html.js .stagger.is-visible > *:nth-child(4){ animation-delay:.24s; }
+    @keyframes rise{ from{ opacity:0; transform:translateY(26px);} to{ opacity:1; transform:none;} }
+
+    .float-slow{ animation:float 9s var(--ease) infinite alternate; }
+    .float-mid{ animation:float 7s var(--ease) infinite alternate; }
+    .float-fast{ animation:float 5.5s var(--ease) infinite alternate; }
+    @keyframes float{ from{ transform:translateY(0);} to{ transform:translateY(-14px);} }
+
+    .scroll-cue .dot{ animation:cue 1.6s var(--ease) infinite; }
+    @keyframes cue{ 0%,100%{ transform:translateY(0); opacity:.4;} 50%{ transform:translateY(6px); opacity:1;} }
+  }
+  /* When motion is reduced, content is simply visible — no hiding, no jank. */
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- =====================================================================
+       HEADER  (EDIT: nav labels & the "Join" button text)
+  ====================================================================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="The Flock Club — home">
+        <!-- Flock mark (decorative) -->
+        <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <path d="M4 22c4-5 7-5 11 0M21 14c4-5 7-5 11 0M14 28c4-5 7-5 11 0"
+                stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+        <span translate="no">The Flock Club</span>
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#what-we-do">What we do</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#why">Why join</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn header-cta" href="#join">Join the flock</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <span id="top"></span>
+
+    <!-- =====================================================================
+         HERO  (EDIT: headline, tagline, intro line, button text)
+    ====================================================================== -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-bg" aria-hidden="true"></div>
+
+      <!-- Decorative flock of birds + flight path -->
+      <svg class="hero-birds" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <path d="M120 540 C 360 300, 620 420, 1080 120" stroke="currentColor"
+              stroke-width="1.6" stroke-dasharray="3 12" fill="none" opacity=".45"/>
+        <g class="float-slow"><path d="M915 150c10-13 17-13 27 0 10-13 17-13 27 0" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/></g>
+        <g class="float-mid"><path d="M845 205c8-10 14-10 22 0 8-10 14-10 22 0" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"/></g>
+        <g class="float-fast"><path d="M1000 235c7-9 12-9 19 0 7-9 12-9 19 0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></g>
+        <g class="float-mid"><path d="M770 300c6-8 11-8 17 0 6-8 11-8 17 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none" opacity=".8"/></g>
+        <g class="float-slow"><path d="M1055 330c5-7 9-7 14 0 5-7 9-7 14 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" opacity=".7"/></g>
+      </svg>
+
+      <div class="container hero-content reveal">
+        <span class="hero-tagline">Wellness &amp; connection · Gurugram</span>
+        <h1 id="hero-heading">Find your <span class="accent">flock</span>.</h1>
+        <p class="lead">Real people, in real life. The Flock Club brings you together
+          through runs, soulful music and quiet moments that are good for your body,
+          your mind &amp; your sense of belonging.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#join">Join the flock</a>
+          <a class="btn btn--ghost" href="#what-we-do">See what we do</a>
+        </div>
+        <p class="hero-meta">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-5.2-7-10.5A7 7 0 0 1 19 10.5C19 15.8 12 21 12 21Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10.5" r="2.4" stroke="currentColor" stroke-width="2"/></svg>
+          Based in Gurugram, Delhi&nbsp;NCR — growing, one city at a time.
+        </p>
+      </div>
+
+      <span class="scroll-cue" aria-hidden="true">Scroll<span class="dot"></span></span>
+    </section>
+
+    <!-- =====================================================================
+         ABOUT — "What is The Flock Club"  (EDIT: the two paragraphs)
+    ====================================================================== -->
+    <section class="section" id="about" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">What is The Flock Club</p>
+          <h2 id="about-heading">Your people are out here — we just help you find them.</h2>
+        </div>
+        <p class="lead reveal">The Flock Club is a community built around two simple
+          things: feeling well, and feeling connected. We host warm, in-person
+          experiences — from easy morning runs to soulful music nights — where you
+          can move, breathe, and actually meet people. No fitting a mold, no
+          pretending. Come as you are; leave with a flock.</p>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         WHAT WE DO — two offering cards  (EDIT: card text & pills)
+    ====================================================================== -->
+    <section class="section" id="what-we-do" aria-labelledby="wwd-heading">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">What we do</p>
+          <h2 id="wwd-heading">Two ways in. One flock.</h2>
+        </div>
+
+        <div class="grid grid-2 stagger reveal">
+          <!-- The Anchor -->
+          <article class="offer-card">
+            <span class="offer-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 7v13M12 7a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM5 13a7 7 0 0 0 14 0M5 13H3m2 0 2 3m12-3h2m-2 0-2 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <p class="offer-kicker">The Anchor</p>
+            <h3>Runs, walks &amp; a really good coffee after.</h3>
+            <p>Our weekly easy-in: a community run or walk through the park, followed
+              by a social. Show up at any pace, stay for the conversation. It’s how
+              most of the flock first meets.</p>
+            <div class="offer-foot">
+              <span class="pill">Weekly</span>
+              <span class="pill">Free / low-cost</span>
+              <span class="pill">All paces welcome</span>
+            </div>
+          </article>
+
+          <!-- The Flagship -->
+          <article class="offer-card offer-card--flagship">
+            <span class="offer-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l11-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm11-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <p class="offer-kicker">The Flagship</p>
+            <h3>A soulful music &amp; wellness gathering, once a month.</h3>
+            <p>Our signature night: live acoustic, Sufi &amp; devotional-meets-modern
+              music, guided breathwork or meditation, and a warm, open crowd. A reset
+              for the senses — and the soul.</p>
+            <div class="offer-foot">
+              <span class="pill">Monthly</span>
+              <span class="pill">Ticketed</span>
+              <span class="pill">Live music + breathwork</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         UPCOMING EVENTS
+         EDIT: To add an event, copy one <article class="event-card"> block
+         and change the date (day + month), title, location, tag & link.
+    ====================================================================== -->
+    <section class="section" id="events" aria-labelledby="events-heading">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Upcoming events</p>
+          <h2 id="events-heading">Find a date that fits your week.</h2>
+        </div>
+
+        <div class="grid grid-3 stagger reveal">
+
+          <article class="event-card">
+            <span class="event-tag">The Anchor</span>
+            <div class="event-top">
+              <span class="event-date" aria-hidden="true"><span class="d">14</span><span class="m">Jun</span></span>
+              <div>
+                <h3>Sunday Sunrise Run &amp; Social</h3>
+                <p class="event-loc">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-5.2-7-10.5A7 7 0 0 1 19 10.5C19 15.8 12 21 12 21Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10.5" r="2.2" stroke="currentColor" stroke-width="2"/></svg>
+                  Leisure Valley Park, Gurugram
+                </p>
+              </div>
+            </div>
+            <p style="color:var(--ink-soft);font-size:var(--step--1)">Sat 14&nbsp;June · 6:30&nbsp;AM · 5K + coffee</p>
+            <a class="btn btn--block" href="#join">Reserve a spot</a>
+          </article>
+
+          <article class="event-card">
+            <span class="event-tag">The Flagship</span>
+            <div class="event-top">
+              <span class="event-date" aria-hidden="true"><span class="d">28</span><span class="m">Jun</span></span>
+              <div>
+                <h3>Flock Nights: Sufi &amp; Soul</h3>
+                <p class="event-loc">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-5.2-7-10.5A7 7 0 0 1 19 10.5C19 15.8 12 21 12 21Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10.5" r="2.2" stroke="currentColor" stroke-width="2"/></svg>
+                  Sector 29, Gurugram
+                </p>
+              </div>
+            </div>
+            <p style="color:var(--ink-soft);font-size:var(--step--1)">Sat 28&nbsp;June · 7:00&nbsp;PM · Live music + breathwork</p>
+            <a class="btn btn--block" href="#join">Reserve a spot</a>
+          </article>
+
+          <article class="event-card">
+            <span class="event-tag">The Anchor</span>
+            <div class="event-top">
+              <span class="event-date" aria-hidden="true"><span class="d">05</span><span class="m">Jul</span></span>
+              <div>
+                <h3>Slow Walk &amp; Chai Circle</h3>
+                <p class="event-loc">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-5.2-7-10.5A7 7 0 0 1 19 10.5C19 15.8 12 21 12 21Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10.5" r="2.2" stroke="currentColor" stroke-width="2"/></svg>
+                  Aravalli Biodiversity Park
+                </p>
+              </div>
+            </div>
+            <p style="color:var(--ink-soft);font-size:var(--step--1)">Sat 5&nbsp;July · 7:00&nbsp;AM · Gentle 3K + chai</p>
+            <a class="btn btn--block" href="#join">Reserve a spot</a>
+          </article>
+
+        </div>
+        <p class="events-note reveal">New events drop every week.
+          <a class="link-arrow" href="#join">Get them in your inbox
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         WHY JOIN  (EDIT: the four value points + the quote placeholder)
+    ====================================================================== -->
+    <section class="section why" id="why" aria-labelledby="why-heading">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Why join</p>
+          <h2 id="why-heading">Good for your body. Better for your belonging.</h2>
+        </div>
+
+        <div class="grid grid-2 stagger reveal" style="gap:var(--space-8) var(--space-12)">
+          <div class="value-item">
+            <span class="v-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M16 7a4 4 0 1 0-8 0M3 21v-1a6 6 0 0 1 6-6h6a6 6 0 0 1 6 6v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            <div><h3>Meet real people</h3><p>Face-to-face, phones away. Conversations that actually go somewhere.</p></div>
+          </div>
+          <div class="value-item">
+            <span class="v-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 12h3l2-5 4 12 3-9 2 2h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <div><h3>Move your body</h3><p>Runs and walks at every pace. Movement that feels like play, not punishment.</p></div>
+          </div>
+          <div class="value-item">
+            <span class="v-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 21c5-3 8-6.5 8-11a8 8 0 0 0-16 0c0 4.5 3 8 8 11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 11c1.5 1.5 4.5 1.5 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            <div><h3>Feel calmer</h3><p>Breathwork, music and meditation to quiet the noise and reset your week.</p></div>
+          </div>
+          <div class="value-item">
+            <span class="v-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20c3-4 5-4 8 0M14 12c3-4 5-4 8 0M9 6c2.2-3 4-3 6 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+            <div><h3>Belong somewhere</h3><p>A flock that has your back — no mold to fit, no version of you to perform.</p></div>
+          </div>
+        </div>
+
+        <!-- Testimonial placeholder — swap for a real member quote later -->
+        <figure class="quote reveal">
+          <div class="mark" aria-hidden="true">&ldquo;</div>
+          <blockquote>I came for the run. I stayed for the people. Now it’s the
+            best part of my week.</blockquote>
+          <figcaption>— <strong>A future member</strong> · placeholder quote, swap me out</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         JOIN — email capture  (EDIT: heading, copy & the Instagram link)
+    ====================================================================== -->
+    <section class="section join" id="join" aria-labelledby="join-heading">
+      <div class="container">
+        <div class="join-card reveal">
+          <p class="eyebrow">Join the flock</p>
+          <h2 id="join-heading">Be first to know about events.</h2>
+          <p>Drop your email and we’ll send you new runs, music nights and the
+            occasional good-for-the-soul note. No spam — just your people.</p>
+
+          <!-- EDIT: CONNECT YOUR EMAIL FORM ------------------------------------
+               Right now this form shows a thank-you message but does NOT store
+               emails anywhere. To collect real signups, pick ONE option:
+
+               A) FORMSPREE (easiest): create a form at formspree.io, then change
+                  the <form> tag to:
+                     <form action="https://formspree.io/f/XXXXXXX" method="POST">
+                  and DELETE the data-demo="true" attribute so it really submits.
+
+               B) MAILCHIMP / GOOGLE FORM: paste their embedded form action URL
+                  into the action="" attribute the same way.
+
+               Until you do, it stays in friendly "demo" mode below.
+          ------------------------------------------------------------------- -->
+          <form class="signup-form" id="signupForm" data-demo="true"
+                action="#" method="POST" novalidate>
+            <div class="field">
+              <label for="email">Email address</label>
+              <input id="email" name="email" type="email" inputmode="email"
+                     autocomplete="email" required
+                     placeholder="you@example.com…" />
+            </div>
+            <button class="btn btn--block" type="submit" id="signupBtn">
+              Join the flock
+            </button>
+            <p class="form-note">By joining you agree to receive occasional emails.
+              Unsubscribe anytime.</p>
+          </form>
+
+          <!-- Live region: announces success/error to screen readers politely -->
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       FOOTER  (EDIT: Instagram handle, email, the "Made in" line)
+  ====================================================================== -->
+  <footer class="site-footer" aria-labelledby="footer-heading">
+    <h2 id="footer-heading" class="sr-only">The Flock Club — footer</h2>
+    <div class="container footer-grid">
+      <div class="footer-head">
+        <span class="footer-brand">
+          <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <path d="M4 22c4-5 7-5 11 0M21 14c4-5 7-5 11 0M14 28c4-5 7-5 11 0"
+                  stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
+          <span translate="no">The Flock Club</span>
+        </span>
+        <p class="footer-tag">Find your flock. A wellness &amp; connection community,
+          made for real life.</p>
+      </div>
+
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#what-we-do">What we do</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#join">Join</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Say hello</h3>
+          <ul>
+            <!-- EDIT: confirm your Instagram handle -->
+            <li><a href="https://instagram.com/theflockclub" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></svg>
+              @theflockclub</a></li>
+            <!-- EDIT: your contact email -->
+            <li><a href="mailto:hello@theflockclub.com">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="2"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              hello@theflockclub.com</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; <span id="year">2026</span> The Flock Club. All rights reserved.</span>
+      <span class="made-in">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-5.2-7-10.5A7 7 0 0 1 19 10.5C19 15.8 12 21 12 21Z" stroke="currentColor" stroke-width="2"/></svg>
+        Made with care in Gurugram
+      </span>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       SCRIPT — progressive enhancement only. The site works without JS.
+  ====================================================================== -->
+  <script>
+  (function(){
+    "use strict";
+    var root = document.documentElement;
+    // Mark that JS is on, so reveal animations can hide-then-show.
+    root.classList.remove("no-js");
+    root.classList.add("js");
+
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Smooth anchor scrolling only when motion is welcome.
+    if(!reduceMotion) root.classList.add("allow-smooth");
+
+    /* ---- Current year in footer ---- */
+    var yearEl = document.getElementById("year");
+    if(yearEl) yearEl.textContent = new Date().getFullYear();
+
+    /* ---- Scroll reveal via IntersectionObserver ---- */
+    var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+    if(reduceMotion || !("IntersectionObserver" in window)){
+      // No animation: just show everything immediately.
+      revealEls.forEach(function(el){ el.classList.add("is-visible"); });
+    } else {
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold:0.14, rootMargin:"0px 0px -8% 0px" });
+      revealEls.forEach(function(el){ io.observe(el); });
+    }
+
+    /* ---- Header: add background on scroll + hide on scroll down ---- */
+    var header = document.getElementById("siteHeader");
+    var lastY = window.scrollY;
+    var ticking = false;
+    function onScroll(){
+      var y = window.scrollY;
+      header.classList.toggle("is-scrolled", y > 8);
+      // Only hide after we're well past the header, and never near the top.
+      if(y > lastY && y > 160){ header.classList.add("is-hidden"); }
+      else { header.classList.remove("is-hidden"); }
+      lastY = y;
+      ticking = false;
+    }
+    window.addEventListener("scroll", function(){
+      if(!ticking){ window.requestAnimationFrame(onScroll); ticking = true; }
+    }, { passive:true });
+    onScroll();
+
+    /* ---- Email signup ---- */
+    var form = document.getElementById("signupForm");
+    var status = document.getElementById("formStatus");
+    var btn = document.getElementById("signupBtn");
+
+    if(form){
+      form.addEventListener("submit", function(e){
+        var email = (form.email.value || "").trim();
+        // Simple client-side check; the browser also validates type="email".
+        var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        // DEMO MODE: no backend connected yet -> show a friendly success message.
+        if(form.dataset.demo === "true"){
+          e.preventDefault();
+          status.removeAttribute("data-state");
+          if(!valid){
+            status.setAttribute("data-state","error");
+            status.textContent = "Hmm, that email looks off — mind checking it?";
+            form.email.focus();
+            return;
+          }
+          // Brief "submitting…" beat, then success.
+          btn.disabled = true;
+          var original = btn.textContent;
+          btn.textContent = "Joining…";
+          window.setTimeout(function(){
+            btn.disabled = false;
+            btn.textContent = original;
+            form.reset();
+            status.setAttribute("data-state","success");
+            status.innerHTML = '<span class="ok">'+
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 13 4 4 10-11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+              "You’re in. Welcome to the flock — watch your inbox.</span>";
+          }, 650);
+          return;
+        }
+        // REAL MODE (Formspree/Mailchimp): let the form submit normally.
+        // We only disable the button so it can't be double-submitted.
+        btn.disabled = true;
+        btn.textContent = "Joining…";
+      });
+    }
+  })();
+  </script>
+</body>
+</html>

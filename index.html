@@ -377,29 +377,31 @@
      Animations ONLY run when JS is present AND motion is allowed.
      ============================================================ */
   @media (prefers-reduced-motion: no-preference){
-    html.js .reveal{ opacity:0; transform:translateY(26px);
-      transition:opacity .7s var(--ease), transform .7s var(--ease); }
+    /* Scroll-reveal: clearly visible rise + subtle scale as sections enter view */
+    html.js .reveal{ opacity:0; transform:translateY(52px) scale(.97);
+      transition:opacity .85s var(--ease), transform .85s var(--ease); }
     html.js .reveal.is-visible{ opacity:1; transform:none; }
-    /* Stagger children of a revealed group */
-    html.js .stagger.is-visible > *{ animation:rise .7s var(--ease) both; }
-    html.js .stagger.is-visible > *:nth-child(2){ animation-delay:.08s; }
-    html.js .stagger.is-visible > *:nth-child(3){ animation-delay:.16s; }
-    html.js .stagger.is-visible > *:nth-child(4){ animation-delay:.24s; }
-    @keyframes rise{ from{ opacity:0; transform:translateY(26px);} to{ opacity:1; transform:none;} }
+    /* Stagger children of a revealed group (cards cascade in one by one) */
+    html.js .stagger.is-visible > *{ animation:rise .8s var(--ease) both; }
+    html.js .stagger.is-visible > *:nth-child(1){ animation-delay:.05s; }
+    html.js .stagger.is-visible > *:nth-child(2){ animation-delay:.20s; }
+    html.js .stagger.is-visible > *:nth-child(3){ animation-delay:.35s; }
+    html.js .stagger.is-visible > *:nth-child(4){ animation-delay:.50s; }
+    @keyframes rise{ from{ opacity:0; transform:translateY(52px) scale(.97);} to{ opacity:1; transform:none;} }
 
     /* Hero: deliberate staggered entrance on page load (no scroll needed) */
-    html.js .hero-entrance > *{ opacity:0; animation:heroIn .9s var(--ease) both; }
-    html.js .hero-entrance > *:nth-child(1){ animation-delay:.12s; }
-    html.js .hero-entrance > *:nth-child(2){ animation-delay:.24s; }
-    html.js .hero-entrance > *:nth-child(3){ animation-delay:.38s; }
-    html.js .hero-entrance > *:nth-child(4){ animation-delay:.52s; }
-    html.js .hero-entrance > *:nth-child(5){ animation-delay:.66s; }
-    @keyframes heroIn{ from{ opacity:0; transform:translateY(32px);} to{ opacity:1; transform:none;} }
+    html.js .hero-entrance > *{ opacity:0; animation:heroIn 1s var(--ease) both; }
+    html.js .hero-entrance > *:nth-child(1){ animation-delay:.15s; }
+    html.js .hero-entrance > *:nth-child(2){ animation-delay:.32s; }
+    html.js .hero-entrance > *:nth-child(3){ animation-delay:.49s; }
+    html.js .hero-entrance > *:nth-child(4){ animation-delay:.66s; }
+    html.js .hero-entrance > *:nth-child(5){ animation-delay:.83s; }
+    @keyframes heroIn{ from{ opacity:0; transform:translateY(64px);} to{ opacity:1; transform:none;} }
 
-    .float-slow{ animation:float 9s var(--ease) infinite alternate; }
-    .float-mid{ animation:float 7s var(--ease) infinite alternate; }
-    .float-fast{ animation:float 5.5s var(--ease) infinite alternate; }
-    @keyframes float{ from{ transform:translateY(0);} to{ transform:translateY(-14px);} }
+    .float-slow{ animation:float 8s var(--ease) infinite alternate; }
+    .float-mid{ animation:float 6s var(--ease) infinite alternate; }
+    .float-fast{ animation:float 4.5s var(--ease) infinite alternate; }
+    @keyframes float{ from{ transform:translateY(0);} to{ transform:translateY(-26px);} }
 
     .scroll-cue .dot{ animation:cue 1.6s var(--ease) infinite; }
     @keyframes cue{ 0%,100%{ transform:translateY(0); opacity:.4;} 50%{ transform:translateY(6px); opacity:1;} }

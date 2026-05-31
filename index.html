@@ -213,9 +213,20 @@
     padding-block:clamp(7rem,16vh,11rem) var(--section-16, 4rem); overflow:hidden; }
   .hero-bg{ position:absolute; inset:0; z-index:0; pointer-events:none;
     background:
-      radial-gradient(120% 90% at 78% 6%, rgba(214,154,74,.30), transparent 55%),
-      radial-gradient(120% 100% at 12% 100%, rgba(187,77,42,.16), transparent 55%),
-      linear-gradient(180deg, #FCF8F0 0%, var(--cream) 45%, #F4ECDD 100%); }
+      radial-gradient(75% 65% at 82% -5%, rgba(214,154,74,.45), transparent 60%),
+      radial-gradient(70% 70% at 2% 102%, rgba(187,77,42,.26), transparent 58%),
+      radial-gradient(60% 55% at 110% 108%, rgba(30,74,61,.18), transparent 60%),
+      linear-gradient(180deg, #FDF9F1 0%, var(--cream) 48%, #F1E7D4 100%); }
+  /* Soft floating colour blobs add depth & movement behind the hero copy */
+  .hero-blobs{ position:absolute; inset:-10% ; z-index:0; pointer-events:none;
+    overflow:hidden; filter:blur(10px); }
+  .hero-blob{ position:absolute; border-radius:50%; opacity:.55; }
+  .hero-blob--1{ width:42vmax; height:42vmax; top:-16vmax; right:-8vmax;
+    background:radial-gradient(circle, rgba(214,154,74,.55), transparent 68%); }
+  .hero-blob--2{ width:34vmax; height:34vmax; bottom:-14vmax; left:-10vmax;
+    background:radial-gradient(circle, rgba(187,77,42,.42), transparent 68%); }
+  .hero-blob--3{ width:26vmax; height:26vmax; bottom:-8vmax; right:6vmax;
+    background:radial-gradient(circle, rgba(44,101,83,.35), transparent 70%); }
   /* Flock motif lives in the background SVG (decorative) */
   .hero-birds{ position:absolute; inset:0; z-index:1; color:var(--forest);
     opacity:.5; pointer-events:none; }
@@ -234,6 +245,46 @@
     z-index:2; display:flex; flex-direction:column; align-items:center; gap:.4rem;
     color:var(--ink-soft); font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; }
   .scroll-cue .dot{ width:5px; height:5px; border-radius:50%; background:var(--terracotta); }
+
+  /* Hero social-proof / at-a-glance stats */
+  .hero-stats{ margin-top:var(--space-8); display:flex; flex-wrap:wrap; gap:var(--space-3); }
+  .hero-stat{ display:flex; flex-direction:column; gap:.15rem; padding:.7rem 1.1rem;
+    border-radius:14px; background:rgba(255,252,246,.65);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    border:1px solid var(--border); box-shadow:var(--shadow-sm); }
+  .hero-stat .num{ font-family:var(--font-display); font-size:1.4rem; font-weight:600;
+    color:var(--terracotta); line-height:1; }
+  .hero-stat .lbl{ font-size:.72rem; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ink-soft); font-weight:600; }
+
+  /* Atmospheric film-grain overlay — removes the flat "digital" feel */
+  body::after{ content:""; position:fixed; inset:0; z-index:9999; pointer-events:none;
+    opacity:.04; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  /* Full-bleed warm feature band (mid-page "hot" moment for contrast) */
+  .feature-band{ position:relative; overflow:hidden; color:#fff;
+    padding-block:clamp(3.5rem,7vw,6rem);
+    background:
+      radial-gradient(110% 130% at 100% 0%, #CC6E34, transparent 56%),
+      radial-gradient(90% 120% at 0% 100%, #9C3A1A, transparent 60%),
+      linear-gradient(110deg, #A53F1D 0%, var(--terracotta) 55%, #B0521F 100%); }
+  .feature-band .fb-deco{ position:absolute; inset:0; z-index:0; color:#fff;
+    opacity:.16; pointer-events:none; }
+  .fb-inner{ position:relative; z-index:1; max-width:56rem; }
+  .feature-band .eyebrow{ color:rgba(255,255,255,.82); }
+  .feature-band h2{ font-size:var(--step-3); color:#fff; margin-bottom:var(--space-6); }
+  .fb-points{ display:flex; flex-wrap:wrap; gap:var(--space-3) var(--space-8);
+    list-style:none; padding:0; margin:0 0 var(--space-8); }
+  .fb-points li{ display:flex; align-items:center; gap:.6rem; font-weight:600;
+    font-size:var(--step-0); color:#fff; }
+  .fb-points svg{ width:22px; height:22px; flex:none; color:rgba(255,255,255,.92); }
+  .feature-band .btn{ --btn-bg:#fff; --btn-fg:var(--terracotta-dark);
+    box-shadow:0 10px 30px rgba(120,40,15,.35); }
+  .feature-band .btn:hover{ background:#FFF6EE; }
+
+  /* Subtle warm tint to alternate sections (visual rhythm vs. flat cream) */
+  .section--tint{ background:linear-gradient(180deg, #F7EFE0 0%, #FBF6EC 100%); }
 
   /* ============================================================
      6. GENERIC SECTION BITS
@@ -413,12 +464,21 @@
     html.js .hero-entrance > *:nth-child(3){ animation-delay:.49s; }
     html.js .hero-entrance > *:nth-child(4){ animation-delay:.66s; }
     html.js .hero-entrance > *:nth-child(5){ animation-delay:.83s; }
+    html.js .hero-entrance > *:nth-child(6){ animation-delay:.97s; }
     @keyframes heroIn{ from{ opacity:0; transform:translateY(64px);} to{ opacity:1; transform:none;} }
 
     .float-slow{ animation:float 8s var(--ease) infinite alternate; }
     .float-mid{ animation:float 6s var(--ease) infinite alternate; }
     .float-fast{ animation:float 4.5s var(--ease) infinite alternate; }
     @keyframes float{ from{ transform:translateY(0);} to{ transform:translateY(-26px);} }
+
+    /* Slow drift for hero colour blobs — living, premium depth */
+    .hero-blob--1{ animation:drift1 16s var(--ease) infinite alternate; }
+    .hero-blob--2{ animation:drift2 20s var(--ease) infinite alternate; }
+    .hero-blob--3{ animation:drift3 18s var(--ease) infinite alternate; }
+    @keyframes drift1{ to{ transform:translate(-4%, 5%)  scale(1.08); } }
+    @keyframes drift2{ to{ transform:translate(6%, -4%)  scale(1.07); } }
+    @keyframes drift3{ to{ transform:translate(-5%, -6%) scale(1.10); } }
 
     .scroll-cue .dot{ animation:cue 1.6s var(--ease) infinite; }
     @keyframes cue{ 0%,100%{ transform:translateY(0); opacity:.4;} 50%{ transform:translateY(6px); opacity:1;} }
@@ -465,6 +525,11 @@
     ====================================================================== -->
     <section class="hero" aria-labelledby="hero-heading">
       <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-blobs" aria-hidden="true">
+        <span class="hero-blob hero-blob--1"></span>
+        <span class="hero-blob hero-blob--2"></span>
+        <span class="hero-blob hero-blob--3"></span>
+      </div>
 
       <!-- Decorative flock of birds + flight path -->
       <svg class="hero-birds" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -486,6 +551,12 @@
         <div class="hero-actions">
           <a class="btn" href="#join">Join the flock</a>
           <a class="btn btn--ghost" href="#what-we-do">See what we do</a>
+        </div>
+        <!-- At-a-glance stats (EDIT these numbers/labels as the flock grows) -->
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="num">Weekly</span><span class="lbl">Runs &amp; walks</span></div>
+          <div class="hero-stat"><span class="num">Monthly</span><span class="lbl">Music &amp; bhajan nights</span></div>
+          <div class="hero-stat"><span class="num">9+</span><span class="lbl">Ways to belong</span></div>
         </div>
         <p class="hero-meta">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-5.2-7-10.5A7 7 0 0 1 19 10.5C19 15.8 12 21 12 21Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10.5" r="2.4" stroke="currentColor" stroke-width="2"/></svg>
@@ -635,11 +706,44 @@
     </section>
 
     <!-- =====================================================================
+         FEATURE BAND — warm full-bleed "why it's different" moment
+         (EDIT: heading, the three points, button text)
+    ====================================================================== -->
+    <section class="feature-band" aria-labelledby="fb-heading">
+      <!-- decorative oversized flock -->
+      <svg class="fb-deco" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <path d="M180 120c40-48 70-48 110 0 40-48 70-48 110 0" stroke="currentColor" stroke-width="9" stroke-linecap="round" fill="none"/>
+        <path d="M620 90c30-36 52-36 78 0 30-36 52-36 78 0" stroke="currentColor" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M860 250c34-42 60-42 90 0 34-42 60-42 90 0" stroke="currentColor" stroke-width="8" stroke-linecap="round" fill="none"/>
+        <path d="M120 300c24-30 42-30 60 0 24-30 42-30 60 0" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none"/>
+      </svg>
+      <div class="container fb-inner reveal">
+        <p class="eyebrow">Why The Flock Club</p>
+        <h2 id="fb-heading">Less doom-scrolling.<br />More actually belonging.</h2>
+        <ul class="fb-points">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Phones away, people first
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Wellness first, party second
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 13 4 4L19 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Come exactly as you are
+          </li>
+        </ul>
+        <a class="btn" href="#join">Find your flock</a>
+      </div>
+    </section>
+
+    <!-- =====================================================================
          UPCOMING EVENTS
          EDIT: To add an event, copy one <article class="event-card"> block
          and change the date (day + month), title, location, tag & link.
     ====================================================================== -->
-    <section class="section" id="events" aria-labelledby="events-heading">
+    <section class="section section--tint" id="events" aria-labelledby="events-heading">
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow">Upcoming events</p>

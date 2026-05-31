@@ -244,33 +244,45 @@
   @media (min-width:760px){ .grid-2{ grid-template-columns:repeat(2,1fr); }
                             .grid-3{ grid-template-columns:repeat(3,1fr); } }
 
-  /* ---- What we do: offering cards ---- */
-  .offer-card{ position:relative; display:flex; flex-direction:column;
-    padding:clamp(1.6rem,4vw,2.4rem); border-radius:var(--radius-lg);
+  /* ---- What we do: experience grid ---- */
+  .exp-grid{ display:grid; gap:var(--space-4); grid-template-columns:1fr; }
+  @media (min-width:600px){ .exp-grid{ grid-template-columns:repeat(2,1fr); gap:var(--space-6); } }
+  @media (min-width:980px){ .exp-grid{ grid-template-columns:repeat(4,1fr); } }
+
+  .exp-card{ position:relative; display:flex; flex-direction:column;
+    padding:clamp(1.4rem,3vw,1.9rem); border-radius:var(--radius);
     background:var(--paper); border:1px solid var(--border); box-shadow:var(--shadow-sm);
-    overflow:hidden;
-    transition:transform .3s var(--ease), box-shadow .3s var(--ease); }
-  .offer-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lg); }
-  .offer-card--flagship{ background:var(--forest); color:var(--on-dark);
-    border-color:transparent; }
-  .offer-card--flagship .offer-kicker{ color:var(--gold); }
-  /* Higher specificity (.offer-card.offer-card--flagship) so the light text
-     always beats the base ".offer-card p" rule regardless of source order. */
-  .offer-card.offer-card--flagship p{ color:var(--on-dark-soft); }
-  .offer-icon{ width:54px; height:54px; display:grid; place-items:center;
-    border-radius:16px; background:rgba(187,77,42,.12); color:var(--terracotta);
-    margin-bottom:var(--space-6); }
-  .offer-card--flagship .offer-icon{ background:rgba(214,154,74,.18); color:var(--gold); }
-  .offer-kicker{ font-size:var(--step--1); font-weight:600; letter-spacing:.14em;
-    text-transform:uppercase; color:var(--terracotta); margin-bottom:.5rem; }
-  .offer-card h3{ font-size:var(--step-2); margin-bottom:var(--space-3); }
-  .offer-card p{ color:var(--ink-soft); margin-bottom:var(--space-6); }
-  .offer-card .offer-foot{ margin-top:auto; display:flex; flex-wrap:wrap; gap:.4rem 1rem;
-    align-items:center; font-size:var(--step--1); }
-  .pill{ display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .8rem;
-    border-radius:var(--radius-pill); background:rgba(43,39,34,.05);
-    font-weight:600; font-size:.8rem; letter-spacing:.02em; }
-  .offer-card--flagship .pill{ background:rgba(251,244,233,.14); color:var(--on-dark); }
+    text-decoration:none; color:inherit;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease),
+               border-color .3s var(--ease); }
+  .exp-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lg);
+    border-color:var(--border-strong); }
+  .exp-card:active{ transform:translateY(-2px); }
+  .exp-icon{ width:50px; height:50px; display:grid; place-items:center;
+    border-radius:14px; margin-bottom:var(--space-4); }
+  .exp-tag{ align-self:flex-start; font-size:.68rem; font-weight:700; letter-spacing:.12em;
+    text-transform:uppercase; padding:.3rem .7rem; border-radius:var(--radius-pill);
+    margin-bottom:var(--space-3); }
+  .exp-card h3{ font-size:var(--step-1); margin-bottom:.4rem; }
+  .exp-card p{ color:var(--ink-soft); font-size:var(--step--1); line-height:1.6;
+    margin-bottom:0; }
+
+  /* Pillar color coding (icon background + tag) */
+  .exp-icon--wellness{ background:rgba(187,77,42,.12);  color:var(--terracotta); }
+  .exp-tag--wellness{  background:rgba(187,77,42,.12);  color:var(--terracotta-dark); }
+  .exp-icon--leisure{  background:rgba(176,120,30,.16); color:#8A5A12; }
+  .exp-tag--leisure{   background:rgba(176,120,30,.16); color:#7A4F0F; }
+  .exp-icon--community{background:rgba(30,74,61,.12);   color:var(--forest); }
+  .exp-tag--community{ background:rgba(30,74,61,.10);   color:var(--forest); }
+
+  /* Invitation tile — dashed, inviting, becomes a soft CTA */
+  .exp-card--invite{ background:transparent; border:1.5px dashed var(--border-strong);
+    box-shadow:none; }
+  .exp-card--invite:hover{ background:var(--paper); border-color:var(--terracotta);
+    box-shadow:var(--shadow-md); }
+  .exp-icon--invite{ background:rgba(187,77,42,.10); color:var(--terracotta); }
+  .exp-card--invite h3{ margin-top:var(--space-2); }
+  .exp-card--invite .link-arrow{ margin-top:var(--space-4); }
 
   /* ---- Events ---- */
   .event-card{ display:flex; flex-direction:column; gap:var(--space-3);
@@ -384,9 +396,13 @@
     /* Stagger children of a revealed group (cards cascade in one by one) */
     html.js .stagger.is-visible > *{ animation:rise .8s var(--ease) both; }
     html.js .stagger.is-visible > *:nth-child(1){ animation-delay:.05s; }
-    html.js .stagger.is-visible > *:nth-child(2){ animation-delay:.20s; }
-    html.js .stagger.is-visible > *:nth-child(3){ animation-delay:.35s; }
-    html.js .stagger.is-visible > *:nth-child(4){ animation-delay:.50s; }
+    html.js .stagger.is-visible > *:nth-child(2){ animation-delay:.13s; }
+    html.js .stagger.is-visible > *:nth-child(3){ animation-delay:.21s; }
+    html.js .stagger.is-visible > *:nth-child(4){ animation-delay:.29s; }
+    html.js .stagger.is-visible > *:nth-child(5){ animation-delay:.37s; }
+    html.js .stagger.is-visible > *:nth-child(6){ animation-delay:.45s; }
+    html.js .stagger.is-visible > *:nth-child(7){ animation-delay:.53s; }
+    html.js .stagger.is-visible > *:nth-child(8){ animation-delay:.61s; }
     @keyframes rise{ from{ opacity:0; transform:translateY(52px) scale(.97);} to{ opacity:1; transform:none;} }
 
     /* Hero: deliberate staggered entrance on page load (no scroll needed) */
@@ -497,49 +513,111 @@
     </section>
 
     <!-- =====================================================================
-         WHAT WE DO — two offering cards  (EDIT: card text & pills)
+         WHAT WE DO — experience grid
+         EDIT: Each experience is one <article class="exp-card">. To add one,
+         copy a card and change its tag class (--wellness / --leisure /
+         --community), icon, title and text. The tag class just sets the color.
     ====================================================================== -->
     <section class="section" id="what-we-do" aria-labelledby="wwd-heading">
       <div class="container">
         <div class="section-head reveal">
           <p class="eyebrow">What we do</p>
-          <h2 id="wwd-heading">Two ways in. One flock.</h2>
+          <h2 id="wwd-heading">Wellness first. Party second.<br />Community, always.</h2>
+          <p class="lead" style="margin-top:var(--space-4)">One flock, many ways to show
+            up — move your body, let loose, and find your people.</p>
         </div>
 
-        <div class="grid grid-2 stagger reveal">
-          <!-- The Anchor -->
-          <article class="offer-card">
-            <span class="offer-icon" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 7v13M12 7a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM5 13a7 7 0 0 0 14 0M5 13H3m2 0 2 3m12-3h2m-2 0-2 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="exp-grid stagger reveal">
+
+          <!-- Wellness -->
+          <article class="exp-card">
+            <span class="exp-icon exp-icon--wellness" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12h3l2-5 4 12 3-9 2 2h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-            <p class="offer-kicker">The Anchor</p>
-            <h3>Runs, walks &amp; a really good coffee after.</h3>
-            <p>Our weekly easy-in: a community run or walk through the park, followed
-              by a social. Show up at any pace, stay for the conversation. It’s how
-              most of the flock first meets.</p>
-            <div class="offer-foot">
-              <span class="pill">Weekly</span>
-              <span class="pill">Free / low-cost</span>
-              <span class="pill">All paces welcome</span>
-            </div>
+            <span class="exp-tag exp-tag--wellness">Wellness</span>
+            <h3>Health &amp; Movement</h3>
+            <p>Runs, walks, breathwork and the good kind of sweat. Move at your own
+              pace, with your people — never alone.</p>
           </article>
 
-          <!-- The Flagship -->
-          <article class="offer-card offer-card--flagship">
-            <span class="offer-icon" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l11-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm11-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <!-- Party & Leisure: Music -->
+          <article class="exp-card">
+            <span class="exp-icon exp-icon--leisure" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l11-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm11-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
-            <p class="offer-kicker">The Flagship</p>
-            <h3>A soulful music &amp; wellness gathering, once a month.</h3>
-            <p>Our signature night: live acoustic, Sufi &amp; devotional-meets-modern
-              music, guided breathwork or meditation, and a warm, open crowd. A reset
-              for the senses — and the soul.</p>
-            <div class="offer-foot">
-              <span class="pill">Monthly</span>
-              <span class="pill">Ticketed</span>
-              <span class="pill">Live music + breathwork</span>
-            </div>
+            <span class="exp-tag exp-tag--leisure">Party &amp; Leisure</span>
+            <h3>Soulful Music Nights</h3>
+            <p>Live Sufi, acoustic &amp; devotional-meets-modern music with breathwork.
+              Our signature night out — good for the senses and the soul.</p>
           </article>
+
+          <!-- Party & Leisure: Trips -->
+          <article class="exp-card">
+            <span class="exp-icon exp-icon--leisure" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="m9 4 6 2 5-2v14l-5 2-6-2-5 2V6l5-2Zm0 0v14m6-12v14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="exp-tag exp-tag--leisure">Party &amp; Leisure</span>
+            <h3>Trips &amp; Getaways</h3>
+            <p>Weekend escapes beyond Gurgaon and easy days out across NCR. Pack light,
+              come open — the flock handles the rest.</p>
+          </article>
+
+          <!-- Party & Leisure: Food -->
+          <article class="exp-card">
+            <span class="exp-icon exp-icon--leisure" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 3v8a3 3 0 0 0 6 0V3M8 11v10M16 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4 2.5-1 2.5-4-1-5-2.5-5Zm0 13v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="exp-tag exp-tag--leisure">Party &amp; Leisure</span>
+            <h3>Local Food Tours</h3>
+            <p>Guided crawls through the city’s best bites. Eat, wander, and meet the
+              people behind the plates — and beside you.</p>
+          </article>
+
+          <!-- Community: Singles -->
+          <article class="exp-card">
+            <span class="exp-icon exp-icon--community" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 20s-7-4.4-7-9.5A4 4 0 0 1 12 8a4 4 0 0 1 7 2.5C19 15.6 12 20 12 20Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="exp-tag exp-tag--community">Community</span>
+            <h3>Singles Meetups</h3>
+            <p>Meet someone new — no pressure, no awkward apps. Just good company and
+              a low-key way to actually connect.</p>
+          </article>
+
+          <!-- Community: Adults -->
+          <article class="exp-card">
+            <span class="exp-icon exp-icon--community" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm9 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1m1-6h1a5 5 0 0 1 5 5v1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="exp-tag exp-tag--community">Community</span>
+            <h3>Adult Meetups</h3>
+            <p>Grown-up socials and interest circles for the 21-plus crowd. Real talk,
+              real laughs, zero small-talk obligation.</p>
+          </article>
+
+          <!-- Community: Bonding -->
+          <article class="exp-card">
+            <span class="exp-icon exp-icon--community" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 21c-1-3-4-4-4-7a4 4 0 0 1 8 0c0 3-3 4-4 7Zm-7-9c-.7-1.6-2-2.2-2-4a2 2 0 0 1 4 0M19 12c.7-1.6 2-2.2 2-4a2 2 0 0 0-4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="exp-tag exp-tag--community">Community</span>
+            <h3>Community Bonding</h3>
+            <p>Game nights, sharing circles and the easy hangouts that quietly turn
+              strangers into a flock.</p>
+          </article>
+
+          <!-- Invitation tile (keeps the grid balanced + adds a friendly CTA) -->
+          <a class="exp-card exp-card--invite" href="#join">
+            <span class="exp-icon exp-icon--invite" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+            </span>
+            <h3>Got an idea?</h3>
+            <p>We build experiences around the flock. Tell us what you’d love to do.</p>
+            <span class="link-arrow" aria-hidden="true">Suggest one
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
         </div>
       </div>
     </section>
@@ -559,7 +637,7 @@
         <div class="grid grid-3 stagger reveal">
 
           <article class="event-card">
-            <span class="event-tag">The Anchor</span>
+            <span class="event-tag">Health</span>
             <div class="event-top">
               <span class="event-date" aria-hidden="true"><span class="d">14</span><span class="m">Jun</span></span>
               <div>
@@ -575,7 +653,7 @@
           </article>
 
           <article class="event-card">
-            <span class="event-tag">The Flagship</span>
+            <span class="event-tag">Music Night</span>
             <div class="event-top">
               <span class="event-date" aria-hidden="true"><span class="d">28</span><span class="m">Jun</span></span>
               <div>
@@ -591,18 +669,18 @@
           </article>
 
           <article class="event-card">
-            <span class="event-tag">The Anchor</span>
+            <span class="event-tag">Food Tour</span>
             <div class="event-top">
               <span class="event-date" aria-hidden="true"><span class="d">05</span><span class="m">Jul</span></span>
               <div>
-                <h3>Slow Walk &amp; Chai Circle</h3>
+                <h3>Old-School Food Crawl</h3>
                 <p class="event-loc">
                   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-5.2-7-10.5A7 7 0 0 1 19 10.5C19 15.8 12 21 12 21Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10.5" r="2.2" stroke="currentColor" stroke-width="2"/></svg>
-                  Aravalli Biodiversity Park
+                  Old Gurgaon &amp; Sadar Bazaar
                 </p>
               </div>
             </div>
-            <p style="color:var(--ink-soft);font-size:var(--step--1)">Sat 5&nbsp;July · 7:00&nbsp;AM · Gentle 3K + chai</p>
+            <p style="color:var(--ink-soft);font-size:var(--step--1)">Sat 5&nbsp;July · 5:00&nbsp;PM · 6 stops, small group</p>
             <a class="btn btn--block" href="#join">Reserve a spot</a>
           </article>
 

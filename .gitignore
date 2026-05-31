@@ -9,3 +9,4 @@ build/
 # Local agent tooling (not part of the published site)
 .agents/
 .claude/
+skills-lock.json
